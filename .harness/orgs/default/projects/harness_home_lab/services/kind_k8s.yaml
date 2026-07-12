@@ -1,0 +1,5 @@
+service:
+  name: kind k8s
+  identifier: kind_k8s
+  orgIdentifier: default
+  projectIdentifier: harness_home_lab
