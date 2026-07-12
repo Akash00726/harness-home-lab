@@ -3,3 +3,34 @@ service:
   identifier: kind_k8s
   orgIdentifier: default
   projectIdentifier: harness_home_lab
+  serviceDefinition:
+    spec:
+      manifests:
+        - manifest:
+            identifier: kubernestes
+            type: K8sManifest
+            spec:
+              store:
+                type: Github
+                spec:
+                  connectorRef: harnesshomelab
+                  gitFetchType: Branch
+                  paths:
+                    - kubernetes/deployment.yaml
+                    - kubernetes/service.yaml
+                  repoName: harness-home-lab
+                  branch: main
+              skipResourceVersioning: false
+              enableDeclarativeRollback: false
+      artifacts:
+        primary:
+          primaryArtifactRef: <+input>
+          sources:
+            - spec:
+                connectorRef: ACR
+                imagePath: app/Dockerfile
+                tag: <+input>
+                digest: ""
+              identifier: app
+              type: DockerRegistry
+    type: Kubernetes
